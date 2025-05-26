@@ -1,0 +1,33 @@
+{
+    "api_key": "7098487439:AAHhj9XaM-ki0mTWdKwL9LakT1qeZBddUIk",
+    "users": {
+        "user1": {
+            "id": 1221095750,
+            "name": "Navindu Karunarathne",
+            "role": "admin"
+        },
+        "1221095750": {
+            "username": "NAVINDUNSK",
+            "user_id": 1221095750,
+            "first_name": "NAVINDUNSK",
+            "last_name": null,
+            "language_code": "en",
+            "is_bot": false,
+            "subscribed_models": []
+        },
+        "5873175924": {
+            "username": "GayashanDevinda",
+            "user_id": 5873175924,
+            "first_name": "Gayashan",
+            "last_name": "Devinda",
+            "language_code": "en",
+            "is_bot": false,
+            "subscribed_models": []
+        }
+    },
+    "last_ads": {
+        "Vitz": [
+            "https://riyasewana.com/buy/toyota-vitz-sale-mawanella-9793392"
+        ]
+    }
+}
