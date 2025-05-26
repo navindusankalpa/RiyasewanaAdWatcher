@@ -4,6 +4,10 @@ import logging
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes
 import ad_watcher  # Assuming ad_watcher.py contains the logic to fetch and process car ads
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Configuration
 CONFIG_FILE = "telegram_config.json"
@@ -124,7 +128,8 @@ async def check_ads(context: ContextTypes.DEFAULT_TYPE):
 
 def main():
     bot_config = BotConfig()
-    api_key = bot_config.config["api_key"]
+    api_key = os.getenv('API_KEY')
+    #api_key = bot_config.config["api_key"]
     print(api_key)
     
     if not api_key or api_key == "YOUR_TELEGRAM_BOT_TOKEN":
