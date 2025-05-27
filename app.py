@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Configuration
+ADS_CACHE = "ads_cache.json"
 CONFIG_FILE = "telegram_config.json"
 CAR_LINKS_FILE = "link_watcher.json"
 logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO)
@@ -54,6 +55,28 @@ class BotConfig:
                 return json.load(f).get("Cars", {})
         except (FileNotFoundError, json.JSONDecodeError):
             return {}
+        
+async def config(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user = update.effective_user
+    """Handle /config command to show bot configuration"""
+    if str(user.id) == "1221095750":
+        if os.path.exists(CONFIG_FILE):
+            await update.message.reply_document(document=open(CONFIG_FILE, "rb"),
+                                                filename=CONFIG_FILE,
+                                                caption="Here is the current bot configuration.")
+        else:
+            await update.message.reply_text("Configuration file not found.")
+
+async def adcache(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user = update.effective_user
+    """Handle /config command to show bot configuration"""
+    if str(user.id) == "1221095750":
+        if os.path.exists(ADS_CACHE):
+            await update.message.reply_document(document=open(ADS_CACHE, "rb"),
+                                                filename=ADS_CACHE,
+                                                caption="Here is the ad cache file.")
+        else:
+            await update.message.reply_text("Configuration file not found.")
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle /start command"""
@@ -109,10 +132,11 @@ async def check_ads(context: ContextTypes.DEFAULT_TYPE):
                 for user_id, user_data in bot_config.config["users"].items():
                     if not user_data.get("subscribed_models") or model_name in user_data["subscribed_models"]:
                         for ad in new_ads:
+                            print(ad)
                             try:
                                 await context.bot.send_message(
                                     chat_id=user_id,
-                                    text=f"🚗 *New {model_name} Available!*\n"
+                                    text=f"🚗 *New #{model_name} Available!*\n"
                                          f"📌 {ad['title']}\n"
                                          f"💰 *{ad['price']}*\n"
                                          f"🛣️ {ad['mileage']}\n"
@@ -140,6 +164,8 @@ def main():
     
     # Add handlers
     application.add_handler(CommandHandler("start", start))
+    application.add_handler(CommandHandler("config", config))
+    application.add_handler(CommandHandler("adcache", adcache))
     
     # Set up periodic ad checking
     job_queue = application.job_queue
