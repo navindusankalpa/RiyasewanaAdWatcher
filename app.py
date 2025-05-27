@@ -134,14 +134,26 @@ async def check_ads(context: ContextTypes.DEFAULT_TYPE):
                         for ad in new_ads:
                             print(ad)
                             try:
-                                await context.bot.send_message(
+                                # await context.bot.send_message(
+                                #     chat_id=user_id,
+                                #     text=f"🚗 *New #{model_name} Available!*\n"
+                                #          f"📌 {ad['title']}\n"
+                                #          f"💰 *{ad['price']}*\n"
+                                #          f"🛣️ {ad['mileage']}\n"
+                                #          f"📍 {ad['location']}\n"
+                                #          f"[🔗 View Ad]({ad['url']})",
+                                #     parse_mode="Markdown"
+                                # )
+                                await context.bot.send_photo(
                                     chat_id=user_id,
-                                    text=f"🚗 *New #{model_name} Available!*\n"
-                                         f"📌 {ad['title']}\n"
+                                    photo=ad['image'],
+                                    caption=f"🚗 *New #{model_name} Available!*\n\n"
+                                         f"📌 {ad['title']}\n\n"
                                          f"💰 *{ad['price']}*\n"
                                          f"🛣️ {ad['mileage']}\n"
                                          f"📍 {ad['location']}\n"
-                                         f"[🔗 View Ad]({ad['url']})",
+                                         f"[🔗 View Ad]({ad['url']})\n\n"
+                                         f"_Made by @NAVINDUNSK_",
                                     parse_mode="Markdown"
                                 )
                             except Exception as e:
