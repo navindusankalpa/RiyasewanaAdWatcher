@@ -13,6 +13,7 @@ load_dotenv()
 ADS_CACHE = "ads_cache.json"
 CONFIG_FILE = "telegram_config.json"
 CAR_LINKS_FILE = "link_watcher.json"
+ADMIN_ID = os.getenv('ADMIN_ID')
 logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO)
 
 class BotConfig:
@@ -59,7 +60,7 @@ class BotConfig:
 async def config(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
     """Handle /config command to show bot configuration"""
-    if str(user.id) == "1221095750":
+    if str(user.id) == ADMIN_ID:
         if os.path.exists(CONFIG_FILE):
             await update.message.reply_document(document=open(CONFIG_FILE, "rb"),
                                                 filename=CONFIG_FILE,
@@ -70,7 +71,7 @@ async def config(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def adcache(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
     """Handle /config command to show bot configuration"""
-    if str(user.id) == "1221095750":
+    if str(user.id) == ADMIN_ID:
         if os.path.exists(ADS_CACHE):
             await update.message.reply_document(document=open(ADS_CACHE, "rb"),
                                                 filename=ADS_CACHE,
