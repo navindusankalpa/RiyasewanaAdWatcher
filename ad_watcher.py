@@ -4,6 +4,7 @@ from urllib.parse import urljoin
 import json
 import os
 from datetime import datetime, timedelta
+import cloudscraper
 
 MAX_PRICE = 10000000
 CACHE_FILE = "ads_cache.json"
@@ -60,10 +61,16 @@ def watch_ads(url, use_cache=True):
         'Sec-Fetch-User': '?1',
         'Cache-Control': 'max-age=0',
     }
-    
+    scraper = cloudscraper.create_scraper(
+        browser={
+            'browser': 'chrome',
+            'platform': 'windows',
+            'desktop': True
+        }
+    )
     try:
         cached_ads = load_cached_ads() if use_cache else {}
-        response = requests.get(url, headers=headers)
+        response = scraper.get(url)
         response.raise_for_status()
         soup = BeautifulSoup(response.content, 'html.parser')
         
